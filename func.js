@@ -1,23 +1,4 @@
-const mainFunc = (msgBits, genBits) => {
-  let arrayMsgBits = msgBits.split("");
-  let arrayGenBits = genBits.split("");
-
-  const { transmittedBits, remainder } = crcFirstFunc(
-    arrayMsgBits,
-    arrayGenBits
-  );
-  const newMsgBits = [...arrayMsgBits, ...remainder];
-  const { transBits, rem } = crcSecondFunc(newMsgBits, arrayGenBits);
-  // return crcSecondFunc(newMsgBits, genBits);
-  let remSum = rem.split("").reduce((prev, curr) => prev + curr);
-  // console.log(remSum);
-
-  return remSum == 0
-    ? `The message bits: ${msgBits} , transmitted, is error-free.`
-    : `The message bits: ${msgBits}, transmitted, is contains an error.`;
-};
-
-//First CRC Long Division Process
+//First CRC Long Division Process - At Sender
 const crcFirstFunc = (msgBits, genBits) => {
   let extendedMsgBits = [...msgBits];
   let extendedMsgBitsChanging = [...msgBits];
@@ -52,7 +33,7 @@ const crcFirstFunc = (msgBits, genBits) => {
   };
 };
 
-//Second CRC Long Division Process
+//Second CRC Long Division Process - At Receiver
 const crcSecondFunc = (newMsgBits, genBits) => {
   let changingMsgBits = newMsgBits;
   let count = 0;
@@ -81,5 +62,26 @@ const crcSecondFunc = (newMsgBits, genBits) => {
   };
 };
 
-console.log(mainFunc("1010001101", "110101"));
-console.log(mainFunc("1011", "1001"));
+//Function implementing Sender and Receiver Algorithms
+export const mainFunc = (msgBits, genBits) => {
+  let arrayMsgBits = msgBits.split("");
+  let arrayGenBits = genBits.split("");
+
+  const { transmittedBits, remainder } = crcFirstFunc(
+    arrayMsgBits,
+    arrayGenBits
+  );
+  const newMsgBits = [...arrayMsgBits, ...remainder.split("")];
+  const { transBits, rem } = crcSecondFunc(newMsgBits, arrayGenBits);
+  let remSum = rem.split("").reduce((prev, curr) => prev + curr);
+
+  return remSum == 0
+    ? `The message bits: ${msgBits} , transmitted, is error-free.
+Transmitted bits: ${newMsgBits.join("")}, remainder after CRC: ${rem}`
+    : `The message bits: ${msgBits}, transmitted, is contains an error.
+Transmitted bits: ${newMsgBits.join("")}, remainder after CRC: ${rem}`;
+};
+
+// console.log(mainFunc("10011101", "1001"));
+// console.log(mainFunc("1010001101", "110101"));
+// console.log(mainFunc("1011", "1001"));

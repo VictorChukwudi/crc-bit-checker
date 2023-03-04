@@ -2,7 +2,11 @@
   "name": "crc-bit-checker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "crc.js",
+  "type": "module",
+  "bin": {
+    "crc-checker": "./crc.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
