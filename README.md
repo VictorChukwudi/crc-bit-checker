@@ -8,7 +8,7 @@
 
 ## General info
 
-A command-line interface program that performs [Cyclic Redundancy Check](https://en.wikipedia.org/wiki/Cyclic_redundancy_check).
+A command-line interface program that performs [Cyclic Redundancy Check](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) on bits (0s and 1s).
 
 ## Modules
 
